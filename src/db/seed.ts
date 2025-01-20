@@ -6,11 +6,9 @@ import sequelize from './sequelize';
 
 export const seedDatabase = async () => {
   try {
-    // Initialize database connection and models
     await sequelize.authenticate();
     console.log('Database connection established.');
 
-    // Initialize models
     initModels();
 
     // Clear existing data

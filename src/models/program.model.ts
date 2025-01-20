@@ -2,7 +2,6 @@ import { DataTypes, Model, Sequelize } from 'sequelize';
 import { ProgramI } from '../interfaces/models/programI';
 import Exercise from './exercise.model';
 
-// Define the Program model
 export class Program extends Model<ProgramI> {
   static initialize(sequelize: Sequelize) {
     this.init(
@@ -16,7 +15,6 @@ export class Program extends Model<ProgramI> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        //exercises: {},
       },
       {
         paranoid: true,
@@ -28,8 +26,5 @@ export class Program extends Model<ProgramI> {
     );
   }
 }
-
-// Exercise.belongsTo(Program, { foreignKey: 'programID', as: 'program' });
-// Program.hasMany(Exercise, { foreignKey: 'programID', as: 'exercises' });
 
 export default Program;
