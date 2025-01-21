@@ -8,7 +8,7 @@ import {
 } from '../services/program.service';
 
 // Get all programs
-export const getPrograms = async (req: Request, res: Response) => {
+export const fetchAllPrograms = async (req: Request, res: Response) => {
   try {
     const programs = await getAllPrograms();
     res.status(200).json(programs);
@@ -18,7 +18,7 @@ export const getPrograms = async (req: Request, res: Response) => {
 };
 
 // Get a single program by ID
-export const getProgram = async (req: Request, res: Response) => {
+export const fetchProgramById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const program = await getProgramById(id);
@@ -29,7 +29,7 @@ export const getProgram = async (req: Request, res: Response) => {
 };
 
 // Create a new program
-export const createProgramHandler = async (req: Request, res: Response) => {
+export const createNewProgram = async (req: Request, res: Response) => {
   try {
     const { name } = req.body;
     const program = await createProgram({ name });
@@ -40,7 +40,7 @@ export const createProgramHandler = async (req: Request, res: Response) => {
 };
 
 // Update an existing program
-export const updateProgramHandler = async (req: Request, res: Response) => {
+export const updateExistingProgram = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const updates = req.body;
@@ -52,7 +52,7 @@ export const updateProgramHandler = async (req: Request, res: Response) => {
 };
 
 // Delete a program
-export const deleteProgramHandler = async (req: Request, res: Response) => {
+export const deleteExistingProgram = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const result = await deleteProgram(id);

@@ -6,13 +6,14 @@ import {
   updateExistingExercise,
   removeExercise,
 } from '../controllers/exercise.controller';
+import { ensureAuthenticated } from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
-router.get('/', fetchAllExercises); // Get all exercises
-router.get('/:id', fetchExerciseById); // Get a single exercise by ID
-router.post('/', createNewExercise); // Create a new exercise
-router.put('/:id', updateExistingExercise); // Update an exercise
-router.delete('/:id', removeExercise); // Delete an exercise
+router.get('/', ensureAuthenticated, fetchAllExercises);
+router.get('/:id', ensureAuthenticated, fetchExerciseById);
+router.post('/', ensureAuthenticated, createNewExercise);
+router.put('/:id', ensureAuthenticated, updateExistingExercise);
+router.delete('/:id', ensureAuthenticated, removeExercise);
 
 export default router;

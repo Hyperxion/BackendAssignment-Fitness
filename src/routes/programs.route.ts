@@ -1,27 +1,19 @@
 import express from 'express';
 import {
-  getPrograms,
-  getProgram,
-  createProgramHandler,
-  updateProgramHandler,
-  deleteProgramHandler,
+  fetchAllPrograms,
+  fetchProgramById,
+  createNewProgram,
+  updateExistingProgram,
+  deleteExistingProgram,
 } from '../controllers/program.controller';
+import { ensureAuthenticated } from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
-// Get all programs
-router.get('/', getPrograms);
-
-// Get a single program by ID
-router.get('/:id', getProgram);
-
-// Create a new program
-router.post('/', createProgramHandler);
-
-// Update an existing program
-router.put('/:id', updateProgramHandler);
-
-// Delete a program
-router.delete('/:id', deleteProgramHandler);
+router.get('/', ensureAuthenticated, fetchAllPrograms);
+router.get('/:id', ensureAuthenticated, fetchProgramById);
+router.post('/', ensureAuthenticated, createNewProgram);
+router.put('/:id', ensureAuthenticated, updateExistingProgram);
+router.delete('/:id', ensureAuthenticated, deleteExistingProgram);
 
 export default router;
