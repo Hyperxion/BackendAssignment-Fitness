@@ -6,7 +6,7 @@ import {
   updateExistingExercise,
   removeExercise,
 } from '../controllers/exercise.controller';
-import { ensureAuthenticated } from '../middlewares/authMiddleware';
+import { ensureAuthenticated } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 

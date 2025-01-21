@@ -6,7 +6,7 @@ import {
   updateExistingProgram,
   deleteExistingProgram,
 } from '../controllers/program.controller';
-import { ensureAuthenticated } from '../middlewares/authMiddleware';
+import { ensureAuthenticated } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
