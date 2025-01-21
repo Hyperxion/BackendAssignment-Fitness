@@ -34,8 +34,10 @@ const startServer = async () => {
   try {
     await initModels(); // Connect to the database and sync models
 
-    await sequelize.sync({ force: true });
-    await seedDatabase();
+    if (process.env.ENVIRONMENT == 'dev') {
+      await sequelize.sync({ force: true });
+      await seedDatabase();
+    }
 
     await app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);

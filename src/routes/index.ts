@@ -1,11 +1,12 @@
 import express from 'express';
 import programRoutes from './programs.route';
 import exerciseRoutes from './exercises.route';
+// import authRoutes from './auth.route';
 
 const router = express.Router();
 
-// Use sub-routers
-router.use('/programs', programRoutes); // Base route for programs
-router.use('/exercises', exerciseRoutes); // Base route for exercises
+router.use('/programs', programRoutes);
+router.use('/exercises', exerciseRoutes);
+// router.use('/auth', authRoutes);
 
 export default router;

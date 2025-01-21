@@ -20,7 +20,7 @@ export class Exercise extends Model<ExerciseI> {
           type: DataTypes.ENUM(...Object.values(EXERCISE_DIFFICULTY)),
           allowNull: false,
         },
-        programID: {
+        programId: {
           type: DataTypes.UUID,
           allowNull: false,
         },

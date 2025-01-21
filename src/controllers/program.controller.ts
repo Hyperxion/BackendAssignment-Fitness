@@ -1,68 +1,63 @@
 import { Request, Response } from 'express';
-import Exercise from '../models/exercise.model';
-import Program from '../models/program.model';
+import {
+  getAllPrograms,
+  getProgramById,
+  createProgram,
+  updateProgram,
+  deleteProgram,
+} from '../services/program.service';
 
-// GET all programs
+// Get all programs
 export const getPrograms = async (req: Request, res: Response) => {
   try {
-    const programs = await Program.findAll();
-    res.json(programs);
-  } catch (error) {
+    const programs = await getAllPrograms();
+    res.status(200).json(programs);
+  } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// POST a new program
-export const createProgram = async (req: Request, res: Response) => {
+// Get a single program by ID
+export const getProgram = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const program = await getProgramById(id);
+    res.status(200).json(program);
+  } catch (error: any) {
+    res.status(404).json({ error: error.message });
+  }
+};
+
+// Create a new program
+export const createProgramHandler = async (req: Request, res: Response) => {
   try {
     const { name } = req.body;
-    const program = await Program.create({ name });
+    const program = await createProgram({ name });
     res.status(201).json(program);
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 };
 
-// GET a specific program by ID (with exercises)
-export const getProgramById = async (req: Request, res: Response) => {
+// Update an existing program
+export const updateProgramHandler = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const program = await Program.findByPk(id, {
-      include: [{ model: Exercise, as: 'exercises' }],
-    });
-    if (!program) return res.status(404).json({ error: 'Program not found' });
-    res.json(program);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const updates = req.body;
+    const program = await updateProgram(id, updates);
+    res.status(200).json(program);
+  } catch (error: any) {
+    res.status(404).json({ error: error.message });
   }
 };
 
-// PUT to update a program
-export const updateProgram = async (req: Request, res: Response) => {
+// Delete a program
+export const deleteProgramHandler = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
-    const program = await Program.findByPk(id);
-    if (!program) return res.status(404).json({ error: 'Program not found' });
-
-    program.name = name;
-    await program.save();
-    res.json(program);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-// DELETE a program
-export const deleteProgram = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const program = await Program.findByPk(id);
-    if (!program) return res.status(404).json({ error: 'Program not found' });
-
-    await program.destroy();
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const result = await deleteProgram(id);
+    res.status(200).json(result);
+  } catch (error: any) {
+    res.status(404).json({ error: error.message });
   }
 };

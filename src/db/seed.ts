@@ -30,22 +30,22 @@ export const seedDatabase = async () => {
       {
         name: 'Push-ups',
         difficulty: EXERCISE_DIFFICULTY.MEDIUM,
-        programID: program1.id,
+        programId: program1.id,
       },
       {
         name: 'Squats',
         difficulty: EXERCISE_DIFFICULTY.HARD,
-        programID: program1.id,
+        programId: program1.id,
       },
       {
         name: 'Running',
         difficulty: EXERCISE_DIFFICULTY.EASY,
-        programID: program2.id,
+        programId: program2.id,
       },
       {
         name: 'Cycling',
         difficulty: EXERCISE_DIFFICULTY.MEDIUM,
-        programID: program2.id,
+        programId: program2.id,
       },
     ]);
 

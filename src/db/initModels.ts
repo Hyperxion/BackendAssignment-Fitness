@@ -9,6 +9,6 @@ export const initModels = () => {
   Exercise.initialize(sequelize);
   User.initialize(sequelize);
 
-  Program.hasMany(Exercise, { foreignKey: 'programID', as: 'exercises' });
-  Exercise.belongsTo(Program, { foreignKey: 'programID', as: 'program' });
+  Program.hasMany(Exercise, { foreignKey: 'programId', as: 'exercises' });
+  Exercise.belongsTo(Program, { foreignKey: 'programId', as: 'program' });
 };
