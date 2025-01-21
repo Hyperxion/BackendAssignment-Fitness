@@ -1,5 +1,8 @@
+import { ExerciseI } from '../interfaces/models/exerciseI';
+import { ProgramI } from '../interfaces/models/programI';
 import Exercise from '../models/exercise.model';
 import Program from '../models/program.model';
+import { EXERCISE_DIFFICULTY } from '../utils/enums';
 
 // Fetch all exercises
 export const getAllExercises = async () => {
@@ -36,25 +39,24 @@ export const getExerciseById = async (id: string) => {
 // Create a new exercise
 export const createExercise = async (data: {
   name: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: EXERCISE_DIFFICULTY;
   programId: string;
 }) => {
-  const { name, difficulty, programId: programId } = data;
+  let exercise: ExerciseI = {
+    programId: data.programId,
+    difficulty: data.difficulty,
+    name: data.name,
+  };
 
   // Validate that the program exists
-  const program = await Program.findByPk(programId);
-  if (!program) {
-    throw new Error('Program does not exist');
+  if (exercise.programId) {
+    const program = await Program.findByPk(exercise.programId);
+    if (!program) {
+      exercise.programId = null;
+    }
   }
 
-  // Create the exercise
-  const exercise = await Exercise.create({
-    name,
-    difficulty,
-    programId,
-  });
-
-  return exercise;
+  return await Exercise.create(exercise);
 };
 
 // Update an existing exercise

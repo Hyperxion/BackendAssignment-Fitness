@@ -22,7 +22,7 @@ export class Exercise extends Model<ExerciseI> {
         },
         programId: {
           type: DataTypes.UUID,
-          allowNull: false,
+          allowNull: true,
         },
       },
       {

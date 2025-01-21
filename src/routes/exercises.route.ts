@@ -12,8 +12,5 @@ const router = express.Router();
 
 router.get('/', ensureAuthenticated, fetchAllExercises);
 router.get('/:id', ensureAuthenticated, fetchExerciseById);
-router.post('/', ensureAuthenticated, createNewExercise);
-router.put('/:id', ensureAuthenticated, updateExistingExercise);
-router.delete('/:id', ensureAuthenticated, removeExercise);
 
 export default router;

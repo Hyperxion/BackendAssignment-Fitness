@@ -7,6 +7,7 @@ import {
   deleteProgram,
 } from '../services/program.service';
 import { errorResponse, successResponse } from '../utils/response';
+import { getExerciseById } from '../services/exercise.service';
 
 // Get all programs
 export const fetchAllPrograms = async (req: Request, res: Response) => {
@@ -66,6 +67,62 @@ export const updateExistingProgram = async (req: Request, res: Response) => {
       );
   } catch (error: any) {
     res.status(500).json(errorResponse('Failed to update program'));
+  }
+};
+
+export const addExerciseToProgram = async (req: Request, res: Response) => {
+  try {
+    const { programId, exerciseId } = req.params;
+
+    const program = await getProgramById(programId);
+    if (!program) {
+      return res.status(404).json(errorResponse('Program not found.'));
+    }
+
+    const exercise = await getExerciseById(exerciseId);
+    if (!exercise) {
+      return res.status(404).json(errorResponse('Exercise not found.'));
+    }
+
+    exercise.programId = programId; // Associate the exercise with the program
+    await exercise.save();
+
+    res
+      .status(200)
+      .json(successResponse(exercise, 'Exercise added to program.'));
+  } catch (error) {
+    console.error('Error adding exercise to program:', error);
+    res.status(500).json(errorResponse('Failed to add exercise to program.'));
+  }
+};
+
+export const removeExerciseFromProgram = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const { programId, exerciseId } = req.params;
+    const exercise = await getExerciseById(exerciseId);
+
+    // Check if exercise exists and is associated with the specified program
+    if (!exercise || exercise.programId !== programId) {
+      return res
+        .status(404)
+        .json(errorResponse('Exercise not found in the specified program.'));
+    }
+
+    // Disassociate the exercise from the program
+    exercise.programId = null;
+    await exercise.save();
+
+    res
+      .status(200)
+      .json(successResponse(exercise, 'Exercise removed from program.'));
+  } catch (error) {
+    console.error('Error removing exercise from program:', error);
+    res
+      .status(500)
+      .json(errorResponse('Failed to remove exercise from program.'));
   }
 };
 

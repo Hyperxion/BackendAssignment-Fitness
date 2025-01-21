@@ -17,6 +17,7 @@ export const seedDatabase = async () => {
 
     // Seed Program data
     const program1 = await Program.create({
+      id: '0191e0e2-32a8-4314-9d9f-400cf59db07f',
       name: 'Strength Training Program',
     });
     const program2 = await Program.create({

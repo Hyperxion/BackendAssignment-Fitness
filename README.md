@@ -81,11 +81,12 @@ Create private API for user with role [ADMIN]
 
 ADMIN can:
 
-- create, update or delete exercises
-- edit exercises in program (add or remove)
-- get all users and all its data
-- get user detail
-- update any user (name, surname, nickName, age, nickName, role)
+DONE - create, update or delete exercises
+
+DONE - edit exercises in program (add or remove)
+DONE - get all users and all its data
+DONE - get user detail
+DONE - update any user (name, surname, nickName, age, nickName, role)
 
 ## Task 3
 

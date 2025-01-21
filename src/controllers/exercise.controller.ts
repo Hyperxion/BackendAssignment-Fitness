@@ -36,12 +36,10 @@ export const createNewExercise = async (req: Request, res: Response) => {
   try {
     const { name, difficulty, programId } = req.body;
 
-    if (!name || !difficulty || !programId) {
+    if (!name || !difficulty) {
       return res
         .status(400)
-        .json(
-          errorResponse('Name, difficulty, and programId are required.', 400),
-        );
+        .json(errorResponse('Name and difficulty are required.', 400));
     }
 
     const exercise = await createExercise({
@@ -56,6 +54,7 @@ export const createNewExercise = async (req: Request, res: Response) => {
         successResponse({ id: exercise.id }, 'Exercise created successfully'),
       );
   } catch (error: any) {
+    console.error(error.message);
     res.status(500).json(errorResponse('Failed to create exercise'));
   }
 };

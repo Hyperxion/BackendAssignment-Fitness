@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import { errorResponse } from '../utils/response';
+import { UserI } from '../interfaces/models/userI';
 
 export const ensureAuthenticated = (
   req: Request,
@@ -9,6 +11,20 @@ export const ensureAuthenticated = (
     return next();
   }
   res.status(401).json({ message: 'Unauthorized access. Please log in.' });
+};
+
+export const ensureAdmin = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const user: UserI = req.user as UserI;
+
+  if (user.role === 'ADMIN') {
+    return next();
+  }
+
+  return res.status(403).json(errorResponse('Access denied: Admins only.'));
 };
 
 export const validateRegistration = (
