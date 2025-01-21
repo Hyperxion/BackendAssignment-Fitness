@@ -20,6 +20,11 @@ app.use(
     secret: 'v€ry$€cr€tK€y',
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production', // Only send cookies over HTTPS in production
+      httpOnly: true, // Prevent access via JavaScript
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    },
   }),
 );
 
