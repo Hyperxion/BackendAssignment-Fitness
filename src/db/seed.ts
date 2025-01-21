@@ -20,6 +20,7 @@ export const seedDatabase = async () => {
       name: 'Strength Training Program',
     });
     const program2 = await Program.create({
+      id: 'ccd5f3e2-32ff-4a7d-84b4-dd37d3827b5d',
       name: 'Cardio Training Program',
     });
 
@@ -28,6 +29,7 @@ export const seedDatabase = async () => {
     // Seed Exercise data
     await Exercise.bulkCreate([
       {
+        id: '977ac95a-e733-44ec-8882-9e3e3f0dcb28',
         name: 'Push-ups',
         difficulty: EXERCISE_DIFFICULTY.MEDIUM,
         programId: program1.id,

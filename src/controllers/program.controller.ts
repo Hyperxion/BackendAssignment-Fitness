@@ -6,14 +6,16 @@ import {
   updateProgram,
   deleteProgram,
 } from '../services/program.service';
+import { errorResponse, successResponse } from '../utils/response';
 
 // Get all programs
 export const fetchAllPrograms = async (req: Request, res: Response) => {
   try {
     const programs = await getAllPrograms();
-    res.status(200).json(programs);
+
+    res.status(200).json(successResponse(programs, 'List of programs'));
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json(errorResponse('Failed to fetch programs'));
   }
 };
 
@@ -22,6 +24,7 @@ export const fetchProgramById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const program = await getProgramById(id);
+
     res.status(200).json(program);
   } catch (error: any) {
     res.status(404).json({ error: error.message });
@@ -32,10 +35,21 @@ export const fetchProgramById = async (req: Request, res: Response) => {
 export const createNewProgram = async (req: Request, res: Response) => {
   try {
     const { name } = req.body;
+
+    if (!name) {
+      return res
+        .status(400)
+        .json(errorResponse('Program name is required.', 400));
+    }
+
     const program = await createProgram({ name });
-    res.status(201).json(program);
+    res
+      .status(201)
+      .json(
+        successResponse({ id: program.id }, 'Program created successfully'),
+      );
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json(errorResponse('Failed to create program', 400));
   }
 };
 
@@ -45,9 +59,13 @@ export const updateExistingProgram = async (req: Request, res: Response) => {
     const { id } = req.params;
     const updates = req.body;
     const program = await updateProgram(id, updates);
-    res.status(200).json(program);
+    res
+      .status(201)
+      .json(
+        successResponse({ id: program.id }, 'Program updated successfully'),
+      );
   } catch (error: any) {
-    res.status(404).json({ error: error.message });
+    res.status(500).json(errorResponse('Failed to update program'));
   }
 };
 
@@ -56,8 +74,10 @@ export const deleteExistingProgram = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const result = await deleteProgram(id);
-    res.status(200).json(result);
+    res
+      .status(200)
+      .json(successResponse({ id }, 'Program deleted successfully'));
   } catch (error: any) {
-    res.status(404).json({ error: error.message });
+    res.status(500).json(errorResponse('Failed to delete program'));
   }
 };
