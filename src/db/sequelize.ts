@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST as string,
     dialect: 'postgres',
-    logging: false,
+    logging: process.env.DB_LOGGING === 'true' ? console.log : false,
   },
 );
 

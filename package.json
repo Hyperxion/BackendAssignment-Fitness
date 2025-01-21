@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true node -r ts-node/register src/server.ts",
+    "start-watch": "nodemon",
     "seed": "cross-env TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true node -r ts-node/register src/db/seed.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\""
   },
@@ -26,6 +27,7 @@
     "eslint-plugin-import": "^2.22.1",
     "express": "^4.17.1",
     "jsdoc": "^4.0.4",
+    "nodemon": "^3.1.9",
     "pg": "^8.4.1",
     "prettier": "^3.4.2",
     "sequelize": "5.21.3",
