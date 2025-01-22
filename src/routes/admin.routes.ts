@@ -10,10 +10,7 @@ import {
   getUserDetails,
   updateUser,
 } from '../controllers/user.controller';
-import {
-  addExerciseToProgram,
-  removeExerciseFromProgram,
-} from '../controllers/program.controller';
+import { addExerciseToProgram } from '../controllers/program.controller';
 
 const router = express.Router();
 
@@ -27,11 +24,6 @@ router.post(
   '/programs/:programId/exercises/:exerciseId',
   ensureAdmin,
   addExerciseToProgram,
-);
-router.delete(
-  '/programs/:programId/exercises/:exerciseId',
-  ensureAdmin,
-  removeExerciseFromProgram,
 );
 
 // User management

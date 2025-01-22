@@ -3,5 +3,5 @@ export interface ExerciseI {
   id?: string;
   difficulty: EXERCISE_DIFFICULTY;
   name: string;
-  programId?: string;
+  programId: string;
 }

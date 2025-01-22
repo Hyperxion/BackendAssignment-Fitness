@@ -104,8 +104,8 @@ USER can:
 
 USER cannot:
 
-- access ADMIN API
-- get or update another user profile
+DONE - access ADMIN API
+DONE - get or update another user profile
 
 ---
 

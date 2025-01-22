@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
 import { User } from '../models/user.model';
 import { successResponse, errorResponse } from '../utils/response';
+import { fetchAllUsers, fetchUserById } from '../services/user.service';
 
 // Get all users
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = await User.findAll();
+    const users = await fetchAllUsers();
     res.status(200).json(successResponse(users, 'List of all users.'));
   } catch (error) {
-    console.error('Error fetching users:', error);
-    res.status(500).json(errorResponse('Failed to fetch users.'));
+    res.status(500).json(errorResponse(error.message));
   }
 };
 
@@ -17,18 +17,14 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const getUserDetails = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json(errorResponse('User not found.'));
-    }
-
+    const user = await fetchUserById(id);
     res
       .status(200)
       .json(successResponse(user, 'User details fetched successfully.'));
   } catch (error) {
-    console.error('Error fetching user details:', error);
-    res.status(500).json(errorResponse('Failed to fetch user details.'));
+    res
+      .status(error.message === 'User not found.' ? 404 : 500)
+      .json(errorResponse(error.message));
   }
 };
 

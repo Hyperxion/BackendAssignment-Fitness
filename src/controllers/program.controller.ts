@@ -70,6 +70,9 @@ export const updateExistingProgram = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * Add/Changes exercise to program assignment
+ */
 export const addExerciseToProgram = async (req: Request, res: Response) => {
   try {
     const { programId, exerciseId } = req.params;
@@ -93,36 +96,6 @@ export const addExerciseToProgram = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error adding exercise to program:', error);
     res.status(500).json(errorResponse('Failed to add exercise to program.'));
-  }
-};
-
-export const removeExerciseFromProgram = async (
-  req: Request,
-  res: Response,
-) => {
-  try {
-    const { programId, exerciseId } = req.params;
-    const exercise = await getExerciseById(exerciseId);
-
-    // Check if exercise exists and is associated with the specified program
-    if (!exercise || exercise.programId !== programId) {
-      return res
-        .status(404)
-        .json(errorResponse('Exercise not found in the specified program.'));
-    }
-
-    // Disassociate the exercise from the program
-    exercise.programId = null;
-    await exercise.save();
-
-    res
-      .status(200)
-      .json(successResponse(exercise, 'Exercise removed from program.'));
-  } catch (error) {
-    console.error('Error removing exercise from program:', error);
-    res
-      .status(500)
-      .json(errorResponse('Failed to remove exercise from program.'));
   }
 };
 
