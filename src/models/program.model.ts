@@ -1,6 +1,5 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 import { ProgramI } from '../interfaces/models/programI';
-import Exercise from './exercise.model';
 
 export class Program extends Model<ProgramI> {
   static initialize(sequelize: Sequelize) {

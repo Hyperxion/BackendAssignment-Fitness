@@ -56,3 +56,5 @@ export class User extends Model<UserI> {
     );
   }
 }
+
+export default User;
