@@ -20,7 +20,7 @@ export class TrackedExercise extends Model<TrackedExerciseI> {
         },
         duration: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true,
         },
         startDate: {
           type: DataTypes.DATE,
@@ -28,7 +28,7 @@ export class TrackedExercise extends Model<TrackedExerciseI> {
         },
         endDate: {
           type: DataTypes.DATE,
-          allowNull: false,
+          allowNull: true,
         },
       },
       {

@@ -8,6 +8,10 @@ import {
 } from '../services/exercise.service';
 import { errorResponse, successResponse } from '../utils/response';
 import { getProgramById } from '../services/program.service';
+import {
+  endExerciseService,
+  startExerciseService,
+} from '../services/trackedExercise.service';
 
 // Get all exercises
 export const fetchAllExercises = async (req: Request, res: Response) => {
@@ -102,5 +106,45 @@ export const removeExercise = async (req: Request, res: Response) => {
       .json(successResponse({ id }, 'Exercise deleted successfully'));
   } catch (error: any) {
     res.status(500).json(errorResponse('Failed to delete exercise'));
+  }
+};
+
+export const startExercise = async (req: Request, res: Response) => {
+  try {
+    const user = req.user as any;
+    const { id: exerciseId } = req.params;
+
+    const startDate = new Date();
+    const trackedExercise = await startExerciseService(
+      user.id,
+      exerciseId,
+      startDate,
+    );
+
+    res
+      .status(201)
+      .json(successResponse(trackedExercise, 'Exercise started successfully.'));
+  } catch (error) {
+    console.error('Error starting exercise:', error);
+    res.status(500).json(errorResponse(error.message));
+  }
+};
+
+export const endExercise = async (req: Request, res: Response) => {
+  try {
+    const user = req.user as any;
+    const { trackedExerciseId } = req.params;
+
+    const trackedExercise = await endExerciseService(
+      user.id,
+      trackedExerciseId,
+    );
+
+    res
+      .status(200)
+      .json(successResponse(trackedExercise, 'Exercise ended successfully.'));
+  } catch (error) {
+    console.error('Error ending exercise:', error);
+    res.status(500).json(errorResponse(error.message));
   }
 };
