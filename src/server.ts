@@ -3,7 +3,7 @@ import routes from './routes'; // Import aggregated routes
 import dotenv from 'dotenv';
 import { initModels } from './models';
 import sequelize from './db/sequelize';
-import { seedDatabase } from './db/seed';
+import { seedDatabase } from './db/seeding/seed';
 import passport from './config/passport.config';
 import session from 'express-session';
 

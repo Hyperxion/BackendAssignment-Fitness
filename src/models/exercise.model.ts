@@ -1,7 +1,6 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 import { EXERCISE_DIFFICULTY } from '../utils/enums';
 import { ExerciseI } from '../interfaces/models/exerciseI';
-import Program from './program.model';
 
 export class Exercise extends Model<ExerciseI> {
   static initialize(sequelize: Sequelize) {
