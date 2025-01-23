@@ -58,3 +58,43 @@ export const updateUser = async (req: Request, res: Response) => {
     res.status(500).json(errorResponse('Failed to update user.'));
   }
 };
+
+/**
+ * Get all users id and nickname
+ */
+export const getUsersBasicInfo = async (req: Request, res: Response) => {
+  try {
+    const users = await User.findAll({
+      attributes: ['id', 'nickName'], // Only fetch id and nickName
+    });
+    res.status(200).json(successResponse(users, 'List of all users.'));
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json(errorResponse('Failed to fetch users.'));
+  }
+};
+
+/**
+ * Get own profile info
+ */
+export const getOwnProfile = async (req: Request, res: Response) => {
+  try {
+    const user = req.user as any;
+    const profile = await User.findByPk(user.id, {
+      attributes: ['name', 'surname', 'age', 'nickName'],
+    });
+
+    if (!profile) {
+      return res.status(404).json(errorResponse('Profile not found.'));
+    }
+
+    res
+      .status(200)
+      .json(
+        successResponse(profile, 'Your profile data fetched successfully.'),
+      );
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    res.status(500).json(errorResponse('Failed to fetch profile data.'));
+  }
+};

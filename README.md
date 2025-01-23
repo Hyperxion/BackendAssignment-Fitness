@@ -96,8 +96,9 @@ Create private API for user with role [USER]
 
 USER can:
 
-- get all users (id, nickName)
-- get own profile data (name, surname, age, nickName)
+DONE - get all users (id, nickName)
+DONE - get own profile data (name, surname, age, nickName)
+
 - track exercises he has completed (he can track same exercise multiple times, we want to save datetime of completion and duration in seconds)
 - see list of completed exercises (with datetime and duration) in profile
 - remove tracked exercise from completed exercises list
