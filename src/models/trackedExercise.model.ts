@@ -18,6 +18,10 @@ export class TrackedExercise extends Model<TrackedExerciseI> {
           type: DataTypes.UUID,
           allowNull: false,
         },
+        duration: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
         startDate: {
           type: DataTypes.DATE,
           allowNull: false,

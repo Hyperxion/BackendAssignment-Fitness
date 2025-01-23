@@ -1,7 +1,7 @@
 import Exercise from '../models/exercise.model';
 import Program from '../models/program.model';
 import { EXERCISE_DIFFICULTY } from '../utils/enums';
-import { initModels } from './initModels';
+import { initModels } from '../models';
 import sequelize from './sequelize';
 
 export const seedDatabase = async () => {
@@ -9,7 +9,7 @@ export const seedDatabase = async () => {
     await sequelize.authenticate();
     console.log('Database connection established.');
 
-    initModels();
+    initModels(sequelize);
 
     // Clear existing data
     await Program.destroy({ where: {} });

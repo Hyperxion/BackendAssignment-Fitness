@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import routes from './routes'; // Import aggregated routes
 import dotenv from 'dotenv';
-import { initModels } from './db/initModels';
+import { initModels } from './models';
 import sequelize from './db/sequelize';
 import { seedDatabase } from './db/seed';
 import passport from './config/passport.config';
@@ -56,7 +56,7 @@ app.use(
 // Start the server and initialize the database
 const startServer = async () => {
   try {
-    await initModels(); // Connect to the database and sync models
+    await initModels(sequelize); // Connect to the database and sync models
 
     if (process.env.ENVIRONMENT == 'dev') {
       await sequelize.sync({ force: true });
