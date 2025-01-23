@@ -7,6 +7,12 @@
 node_modules/
 dist/
 
+# Archived files
+*.zip
+*.rar
+*.7z
+*.tar
+
 # Compiled Java class files
 *.class
 
