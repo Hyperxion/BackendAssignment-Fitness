@@ -18,7 +18,7 @@ export const generateUsers = (
     const nickName = surname + randomNumber(100);
     const password =
       '$2b$10$cvOqJomASQWTzUuUiLLRDu8U8GSvaG/unikuASgLJA.2EFaPXewrW'; // user123
-    const email = `${name}.${surname}@gmail.com`;
+    const email = `${name.toLowerCase()}.${surname.toLowerCase()}${randomNumber(10000)}@gmail.com`;
 
     const user: UserI = {
       id: uuidv4(),
