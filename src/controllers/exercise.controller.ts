@@ -4,6 +4,7 @@ import {
   deleteExercise,
   getAllExercises,
   getExerciseById,
+  removeTrackedExercise,
   updateExercise,
 } from '../services/exercise.service';
 import { errorResponse, successResponse } from '../utils/response';
@@ -146,5 +147,34 @@ export const endExercise = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error ending exercise:', error);
     res.status(500).json(errorResponse(error.message));
+  }
+};
+
+export const removeTrackedExerciseController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const user = req.user as any;
+    const { trackedExerciseId } = req.params;
+
+    if (!trackedExerciseId) {
+      return res
+        .status(400)
+        .json(errorResponse('Tracked exercise ID is required.'));
+    }
+
+    await removeTrackedExercise(trackedExerciseId, user.id);
+
+    res
+      .status(200)
+      .json(successResponse(null, 'Tracked exercise removed successfully.'));
+  } catch (error) {
+    console.error('Error removing tracked exercise:', error);
+    res
+      .status(500)
+      .json(
+        errorResponse(error.message || 'Failed to remove tracked exercise.'),
+      );
   }
 };

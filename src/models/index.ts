@@ -54,5 +54,14 @@ export const initModels = (sequelize: Sequelize) => {
     as: 'user',
   });
 
+  TrackedExercise.belongsTo(Exercise, {
+    foreignKey: 'exerciseId',
+    as: 'exercise',
+  });
+  Exercise.hasMany(TrackedExercise, {
+    foreignKey: 'exerciseId',
+    as: 'trackedExercises',
+  });
+
   console.log('All models initialized successfully!');
 };

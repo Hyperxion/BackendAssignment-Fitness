@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { User } from '../models/user.model';
 import { successResponse, errorResponse } from '../utils/response';
-import { fetchAllUsers, fetchUserById } from '../services/user.service';
+import {
+  fetchAllUsers,
+  fetchUserById,
+  getOwnProfileService,
+} from '../services/user.service';
 
 // Get all users
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -75,18 +79,12 @@ export const getUsersBasicInfo = async (req: Request, res: Response) => {
 };
 
 /**
- * Get own profile info
+ * Get own profile info with tracked exercises
  */
 export const getOwnProfile = async (req: Request, res: Response) => {
   try {
     const user = req.user as any;
-    const profile = await User.findByPk(user.id, {
-      attributes: ['name', 'surname', 'age', 'nickName'],
-    });
-
-    if (!profile) {
-      return res.status(404).json(errorResponse('Profile not found.'));
-    }
+    const profile = await getOwnProfileService(user.id);
 
     res
       .status(200)
@@ -95,6 +93,8 @@ export const getOwnProfile = async (req: Request, res: Response) => {
       );
   } catch (error) {
     console.error('Error fetching profile:', error);
-    res.status(500).json(errorResponse('Failed to fetch profile data.'));
+    res
+      .status(500)
+      .json(errorResponse(error.message || 'Failed to fetch profile data.'));
   }
 };

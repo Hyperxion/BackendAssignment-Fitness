@@ -1,3 +1,5 @@
+import Exercise from '../models/exercise.model';
+import TrackedExercise from '../models/trackedExercise.model';
 import { User } from '../models/user.model';
 
 // Fetch all users
@@ -45,4 +47,30 @@ export const updateUserById = async (
     console.error('Error updating user:', error);
     throw new Error(error.message);
   }
+};
+
+export const getOwnProfileService = async (userId: string) => {
+  const profile = await User.findByPk(userId, {
+    attributes: ['name', 'surname', 'age', 'nickName'],
+    include: [
+      {
+        model: TrackedExercise,
+        as: 'trackedExercises',
+        include: [
+          {
+            model: Exercise,
+            as: 'exercise',
+            attributes: ['name', 'difficulty'],
+          },
+        ],
+        attributes: ['id', 'startDate', 'endDate', 'duration'],
+      },
+    ],
+  });
+
+  if (!profile) {
+    throw new Error('Profile not found.');
+  }
+
+  return profile;
 };

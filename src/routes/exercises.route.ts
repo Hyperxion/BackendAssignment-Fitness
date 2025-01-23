@@ -4,6 +4,7 @@ import {
   fetchExerciseById,
   endExercise,
   startExercise,
+  removeTrackedExerciseController,
 } from '../controllers/exercise.controller';
 import { ensureAuthenticated } from '../middlewares/auth.middleware';
 
@@ -14,6 +15,11 @@ router.get('/:id', ensureAuthenticated, fetchExerciseById);
 
 router.post('/:id/start', ensureAuthenticated, startExercise);
 router.patch('/end/:trackedExerciseId', ensureAuthenticated, endExercise);
+router.delete(
+  '/tracked-exercises/:trackedExerciseId',
+  ensureAuthenticated,
+  removeTrackedExerciseController,
+);
 
 router;
 

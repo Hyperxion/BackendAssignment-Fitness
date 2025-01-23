@@ -2,6 +2,7 @@ import { ExerciseI } from '../interfaces/models/exerciseI';
 import { ProgramI } from '../interfaces/models/programI';
 import Exercise from '../models/exercise.model';
 import Program from '../models/program.model';
+import TrackedExercise from '../models/trackedExercise.model';
 import { EXERCISE_DIFFICULTY } from '../utils/enums';
 
 // Fetch all exercises
@@ -10,8 +11,8 @@ export const getAllExercises = async () => {
     include: [
       {
         model: Program,
-        as: 'program', // Include associated program
-        attributes: ['id', 'name'], // Fetch only specific fields from the program
+        as: 'program',
+        attributes: ['id', 'name'],
       },
     ],
   });
@@ -100,4 +101,23 @@ export const deleteExercise = async (id: string) => {
   await exercise.destroy();
 
   return { message: 'Exercise deleted successfully' };
+};
+
+export const removeTrackedExercise = async (
+  trackedExerciseId: string,
+  userId: string,
+): Promise<void> => {
+  const trackedExercise = await TrackedExercise.findOne({
+    where: {
+      id: trackedExerciseId,
+      userId,
+    },
+  });
+
+  if (!trackedExercise) {
+    throw new Error('Tracked exercise not found.');
+  }
+
+  // Remove the tracked exercise
+  await trackedExercise.destroy();
 };
