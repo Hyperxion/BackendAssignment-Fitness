@@ -11,5 +11,17 @@ i18next
     },
     fallbackLng: 'en',
     preload: ['en', 'sk'],
+    detection: {
+      order: ['header', 'querystring', 'cookie'],
+      lookupHeader: 'language',
+      caches: false,
+    },
+  })
+  .then(() => {
+    console.log('i18next initialized successfully.');
+  })
+  .catch((error) => {
+    console.error('Error initializing i18next:', error);
   });
+
 export default i18next;
