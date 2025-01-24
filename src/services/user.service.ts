@@ -1,12 +1,17 @@
+import { FindAndCountOptions } from 'sequelize';
 import Exercise from '../models/exercise.model';
 import TrackedExercise from '../models/trackedExercise.model';
 import { User } from '../models/user.model';
+import { paginate } from '../utils/paginationHelper';
 
 // Fetch all users
-export const fetchAllUsers = async () => {
+export const fetchAllUsers = async (
+  page: number,
+  limit: number,
+  attributes: FindAndCountOptions,
+) => {
   try {
-    const users = await User.findAll();
-    return users;
+    return await paginate(User, attributes, page, limit);
   } catch (error) {
     console.error('Error fetching users:', error);
     throw new Error('Failed to fetch users.');

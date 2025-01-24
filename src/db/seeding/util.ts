@@ -15,7 +15,7 @@ export const generateUsers = (
   for (let i = 0; i < count; i++) {
     const name = randomArrayValue(userFirstNames).element;
     const surname = randomArrayValue(userLastNames).element;
-    const nickName = surname + randomNumber(100);
+    const nickName = surname + randomNumber(1000);
     const password =
       '$2b$10$cvOqJomASQWTzUuUiLLRDu8U8GSvaG/unikuASgLJA.2EFaPXewrW'; // user123
     const email = `${name.toLowerCase()}.${surname.toLowerCase()}${randomNumber(10000)}@gmail.com`;

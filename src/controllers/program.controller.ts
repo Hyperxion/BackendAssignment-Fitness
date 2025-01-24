@@ -5,6 +5,7 @@ import {
   createProgram,
   updateProgram,
   deleteProgram,
+  getPaginatedPrograms,
 } from '../services/program.service';
 import { errorResponse, successResponse } from '../utils/response';
 import { getExerciseById } from '../services/exercise.service';
@@ -12,7 +13,10 @@ import { getExerciseById } from '../services/exercise.service';
 // Get all programs
 export const fetchAllPrograms = async (req: Request, res: Response) => {
   try {
-    const programs = await getAllPrograms();
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+
+    const programs = await getPaginatedPrograms(page, limit);
 
     res.status(200).json(successResponse(programs, 'List of programs'));
   } catch (error: any) {
