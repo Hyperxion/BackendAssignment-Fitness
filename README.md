@@ -111,7 +111,7 @@ DONE - get or update another user profile
 
 ---
 
-## Bonus task 1 - pagination, filter, search
+## Bonus task 1 - pagination, filter, search - DONE
 
 DONE - Add pagination to exercise list using query => `/exercises?page=1&limit=10` return 1 page of exercises in maximal length of 10.
 

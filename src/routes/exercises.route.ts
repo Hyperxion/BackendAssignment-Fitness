@@ -7,10 +7,17 @@ import {
   removeTrackedExerciseController,
 } from '../controllers/exercise.controller';
 import { ensureAuthenticated } from '../middlewares/auth.middleware';
+import { validateRequest } from '../middlewares/validateRequest.middleware';
+import { filterValidationSchema } from '../validations/filter.validation';
 
 const router = express.Router();
 
-router.get('/', ensureAuthenticated, fetchAllExercises);
+router.get(
+  '/',
+  validateRequest(filterValidationSchema, 'query'),
+  ensureAuthenticated,
+  fetchAllExercises,
+);
 router.get('/:id', ensureAuthenticated, fetchExerciseById);
 
 router.post('/:id/start', ensureAuthenticated, startExercise);
