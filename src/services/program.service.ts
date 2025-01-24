@@ -8,8 +8,13 @@ export const getAllPrograms = async (
   page: number,
   limit: number,
   filters: Record<string, any>,
+  search?: string,
 ) => {
-  const where = buildWhereClause(filters, ['name', 'id']);
+  const where = buildWhereClause(
+    { ...filters, search },
+    ['name', 'id'],
+    'name',
+  );
 
   return await paginate(
     Program,

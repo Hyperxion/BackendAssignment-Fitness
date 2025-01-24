@@ -14,13 +14,13 @@ export const fetchAllPrograms = async (req: Request, res: Response) => {
   try {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
-
+    const search = req.query.search as string;
     const filters = {
       name: req.query.name,
       id: req.query.id,
     };
 
-    const programs = await getAllPrograms(page, limit, filters);
+    const programs = await getAllPrograms(page, limit, filters, search);
 
     res.status(200).json(successResponse(programs, 'List of programs'));
   } catch (error: any) {

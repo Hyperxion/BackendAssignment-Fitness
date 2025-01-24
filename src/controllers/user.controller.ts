@@ -14,7 +14,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
     const user: UserI = req.user as UserI;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
-
+    const search = req.query.search as string;
     const adminFilters = {
       role: req.query.role,
       age: req.query.age,
@@ -36,7 +36,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
         ? ['id', 'name', 'surname', 'email', 'nickName', 'age', 'role']
         : ['id', 'nickName'];
 
-    const users = await fetchAllUsers(page, limit, attributes, filters);
+    const users = await fetchAllUsers(page, limit, attributes, filters, search);
     res.status(200).json(successResponse(users, 'List of all users.'));
   } catch (error) {
     res.status(500).json(errorResponse(error.message));

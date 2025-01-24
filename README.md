@@ -75,7 +75,7 @@ DONE - you can use any authorization approach or npm module (preferred is JWT st
 
 ---
 
-## Task 2
+## Task 2 - DONE
 
 Create private API for user with role [ADMIN]
 
@@ -88,7 +88,7 @@ DONE - get all users and all its data
 DONE - get user detail
 DONE - update any user (name, surname, nickName, age, nickName, role)
 
-## Task 3
+## Task 3 - DONE
 
 ---
 
@@ -117,7 +117,7 @@ DONE - Add pagination to exercise list using query => `/exercises?page=1&limit=1
 
 DONE - Add filter by program => `/exercises?programID=1` return only exercises of program with id = 1
 
-add fultext search on exercise name => `/exercises?search=cis` => return only exercises which name consist of string `cis`
+DONE - add fultext search on exercise name => `/exercises?search=cis` => return only exercises which name consist of string `cis`
 
 ---
 

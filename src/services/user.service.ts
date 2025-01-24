@@ -10,9 +10,14 @@ export const fetchAllUsers = async (
   limit: number,
   attributes: string[],
   filters: Record<string, any>,
+  search?: string,
 ) => {
   try {
-    const where = buildWhereClause(filters, ['role', 'age']); // Allow filtering by role and age
+    const where = buildWhereClause(
+      { ...filters, search },
+      ['role', 'age'],
+      'nickName',
+    );
 
     return await paginate(User, { where, attributes }, page, limit);
   } catch (error) {

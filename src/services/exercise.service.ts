@@ -11,8 +11,13 @@ export const getAllExercises = async (
   page: number,
   limit: number,
   filters: Record<string, any>,
+  search?: string,
 ) => {
-  const where = buildWhereClause(filters, ['difficulty', 'programId', 'name']);
+  const where = buildWhereClause(
+    { ...filters, search },
+    ['difficulty', 'programId', 'name'],
+    'name',
+  );
 
   return await paginate(
     Exercise,
