@@ -16,7 +16,7 @@ export const exercisesNames: string[] = [
   'Ring Maltese',
   'Ring Pull Up',
   'Ring Push Up',
-  'Slider Pike ',
+  'Slider Pike',
   'Tire Step Up',
   'Bar Dead Hang',
   'Barbell Climb',

@@ -1,12 +1,20 @@
 import Exercise from '../models/exercise.model';
 import Program from '../models/program.model';
+import { buildWhereClause } from '../utils/filterHelper';
 import { paginate } from '../utils/paginationHelper';
 
 // Get all programs
-export const getAllPrograms = async (page: number, limit: number) => {
+export const getAllPrograms = async (
+  page: number,
+  limit: number,
+  filters: Record<string, any>,
+) => {
+  const where = buildWhereClause(filters, ['name', 'id']);
+
   return await paginate(
     Program,
     {
+      where,
       include: [
         {
           model: Exercise,

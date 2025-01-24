@@ -1,17 +1,20 @@
-import { FindAndCountOptions } from 'sequelize';
 import Exercise from '../models/exercise.model';
 import TrackedExercise from '../models/trackedExercise.model';
 import { User } from '../models/user.model';
 import { paginate } from '../utils/paginationHelper';
+import { buildWhereClause } from '../utils/filterHelper';
 
 // Fetch all users
 export const fetchAllUsers = async (
   page: number,
   limit: number,
-  attributes: FindAndCountOptions,
+  attributes: string[],
+  filters: Record<string, any>,
 ) => {
   try {
-    return await paginate(User, attributes, page, limit);
+    const where = buildWhereClause(filters, ['role', 'age']); // Allow filtering by role and age
+
+    return await paginate(User, { where, attributes }, page, limit);
   } catch (error) {
     console.error('Error fetching users:', error);
     throw new Error('Failed to fetch users.');

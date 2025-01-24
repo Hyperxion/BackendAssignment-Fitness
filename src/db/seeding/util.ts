@@ -19,6 +19,7 @@ export const generateUsers = (
     const password =
       '$2b$10$cvOqJomASQWTzUuUiLLRDu8U8GSvaG/unikuASgLJA.2EFaPXewrW'; // user123
     const email = `${name.toLowerCase()}.${surname.toLowerCase()}${randomNumber(10000)}@gmail.com`;
+    const role = randomEnumValue(ROLES);
 
     const user: UserI = {
       id: uuidv4(),
@@ -28,8 +29,10 @@ export const generateUsers = (
       password,
       email,
       age: 18 + randomNumber(42),
-      role: randomEnumValue(ROLES),
+      role,
     };
+
+    console.log(`-----> ${email};${role}`);
 
     users.push(user);
   }

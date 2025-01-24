@@ -20,7 +20,13 @@ export const fetchAllExercises = async (req: Request, res: Response) => {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
 
-    const exercises = await getAllExercises(page, limit);
+    const filters = {
+      difficulty: req.query.difficulty,
+      programId: req.query.programId,
+      name: req.query.name,
+    };
+
+    const exercises = await getAllExercises(page, limit, filters);
 
     res.status(200).json(successResponse(exercises, 'List of exercises'));
   } catch (error: any) {

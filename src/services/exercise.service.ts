@@ -3,13 +3,20 @@ import Exercise from '../models/exercise.model';
 import Program from '../models/program.model';
 import TrackedExercise from '../models/trackedExercise.model';
 import { EXERCISE_DIFFICULTY } from '../utils/enums';
+import { buildWhereClause } from '../utils/filterHelper';
 import { paginate } from '../utils/paginationHelper';
 
 // Fetch all exercises
-export const getAllExercises = async (page: number, limit: number) => {
+export const getAllExercises = async (
+  page: number,
+  limit: number,
+  filters: Record<string, any>,
+) => {
+  const where = buildWhereClause(filters, ['difficulty', 'programId', 'name']);
+
   return await paginate(
     Exercise,
-    { attributes: ['id', 'name', 'difficulty', 'programId'] },
+    { where, attributes: ['id', 'name', 'difficulty', 'programId'] },
     page,
     limit,
   );

@@ -6,16 +6,37 @@ import {
   fetchUserById,
   getOwnProfileService,
 } from '../services/user.service';
+import { UserI } from '../interfaces/models/userI';
 
 // Get all users
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
+    const user: UserI = req.user as UserI;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
 
-    const users = await fetchAllUsers(page, limit, {
-      attributes: { exclude: ['password'] },
-    });
+    const adminFilters = {
+      role: req.query.role,
+      age: req.query.age,
+      name: req.query.name,
+      surname: req.query.name,
+      nickName: req.query.name,
+      email: req.query.email,
+    };
+
+    const userFilters = {
+      nickName: req.query.name,
+      id: req.query.id,
+    };
+
+    const filters = user.role === 'ADMIN' ? adminFilters : userFilters;
+
+    const attributes =
+      user.role === 'ADMIN'
+        ? ['id', 'name', 'surname', 'email', 'nickName', 'age', 'role']
+        : ['id', 'nickName'];
+
+    const users = await fetchAllUsers(page, limit, attributes, filters);
     res.status(200).json(successResponse(users, 'List of all users.'));
   } catch (error) {
     res.status(500).json(errorResponse(error.message));
@@ -65,25 +86,6 @@ export const updateUser = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error updating user:', error);
     res.status(500).json(errorResponse('Failed to update user.'));
-  }
-};
-
-/**
- * Get all users id and nickname
- */
-export const getUsersBasicInfo = async (req: Request, res: Response) => {
-  try {
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
-
-    const users = await fetchAllUsers(page, limit, {
-      attributes: ['id', 'nickName'],
-    });
-
-    res.status(200).json(successResponse(users, 'List of all users.'));
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    res.status(500).json(errorResponse('Failed to fetch users.'));
   }
 };
 

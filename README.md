@@ -115,7 +115,7 @@ DONE - get or update another user profile
 
 DONE - Add pagination to exercise list using query => `/exercises?page=1&limit=10` return 1 page of exercises in maximal length of 10.
 
-Add filter by program => `/exercises?programID=1` return only exercises of program with id = 1
+DONE - Add filter by program => `/exercises?programID=1` return only exercises of program with id = 1
 
 add fultext search on exercise name => `/exercises?search=cis` => return only exercises which name consist of string `cis`
 
