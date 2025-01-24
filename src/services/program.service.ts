@@ -27,7 +27,7 @@ export const getAllPrograms = async (
           attributes: ['id', 'name', 'difficulty'],
         },
       ],
-
+      distinct: true,
       attributes: ['id', 'name'],
     },
     page,
