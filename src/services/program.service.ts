@@ -2,21 +2,24 @@ import Exercise from '../models/exercise.model';
 import Program from '../models/program.model';
 import { paginate } from '../utils/paginationHelper';
 
-export const getPaginatedPrograms = async (page: number, limit: number) => {
-  return await paginate(Program, { attributes: ['id', 'name'] }, page, limit);
-};
-
 // Get all programs
-export const getAllPrograms = async () => {
-  return await Program.findAll({
-    include: [
-      {
-        model: Exercise,
-        as: 'exercises',
-        attributes: ['id', 'name', 'difficulty'],
-      },
-    ],
-  });
+export const getAllPrograms = async (page: number, limit: number) => {
+  return await paginate(
+    Program,
+    {
+      include: [
+        {
+          model: Exercise,
+          as: 'exercises',
+          attributes: ['id', 'name', 'difficulty'],
+        },
+      ],
+
+      attributes: ['id', 'name'],
+    },
+    page,
+    limit,
+  );
 };
 
 // Get a single program by ID
