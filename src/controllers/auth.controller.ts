@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { registerUser } from '../services/auth.service';
 import passport from '../config/passport.config';
 import { UserI } from '../interfaces/models/userI';
+import { errorResponse, successResponse } from '../utils/response';
 
 // Register endpoint
 export const register = async (req: Request, res: Response) => {
@@ -18,32 +19,30 @@ export const register = async (req: Request, res: Response) => {
     });
     res
       .status(201)
-      .json({ message: `User ${name} ${surname} registered successfully!` });
+      .json(successResponse({ name, surname }, req.t('success.register')));
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    console.error('Error registering user:', error);
+    res.status(500).json(errorResponse(req.t('error.internal')));
   }
 };
 
 export const login = (req: Request, res: Response, next: NextFunction) => {
-  // Use Passport to authenticate with the 'local' strategy
   passport.authenticate(
     'local',
-    (err: any, user: UserI, info: { message: any }) => {
-      if (err) {
-        // Handle unexpected errors
-        return next(err);
+    (error: any, user: UserI, info: { message: any }) => {
+      if (error) {
+        console.error('Error logging in:', error);
+        return res.status(500).json(errorResponse(req.t('error.internal')));
       }
       if (!user) {
-        // If authentication fails, return a 401 Unauthorized response
-        return res
-          .status(401)
-          .json({ message: info?.message || 'Invalid credentials.' });
+        console.error('User not found:', error);
+        return res.status(500).json(errorResponse(req.t('error.internal')));
       }
 
       // Log the user in and establish a session
-      req.logIn(user, (err) => {
-        if (err) {
-          return next(err);
+      req.logIn(user, (error) => {
+        if (error) {
+          return next(error);
         }
 
         // Filter sensitive fields from the user object
@@ -60,7 +59,12 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
         // Return a success response
         res
           .status(200)
-          .json({ message: 'Login successful!', user: userResponse });
+          .json(
+            successResponse(
+              { name: userResponse.name, surname: userResponse.surname },
+              req.t('success.login'),
+            ),
+          );
       });
     },
   )(req, res, next);

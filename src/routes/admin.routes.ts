@@ -10,7 +10,6 @@ import {
   getUserDetails,
   updateUser,
 } from '../controllers/user.controller';
-import { addExerciseToProgram } from '../controllers/program.controller';
 
 const router = express.Router();
 
@@ -18,13 +17,6 @@ const router = express.Router();
 router.post('/exercises', ensureAdmin, createNewExercise);
 router.put('/exercises/:id', ensureAdmin, updateExistingExercise);
 router.delete('/exercises/:id', ensureAdmin, removeExercise);
-
-// Manage exercises in a program
-router.post(
-  '/programs/:programId/exercises/:exerciseId',
-  ensureAdmin,
-  addExerciseToProgram,
-);
 
 // User management
 router.get('/users', ensureAdmin, getAllUsers); // Get all users

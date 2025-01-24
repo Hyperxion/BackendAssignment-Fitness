@@ -121,10 +121,10 @@ DONE - add fultext search on exercise name => `/exercises?search=cis` => return 
 
 ---
 
-## Bonus task 2 - validation
+## Bonus task 2 - validation - DONE
 
-Create validation service to check request body, query and params to make sure user sends valid request. For example, in registration, user must send valid email, otherwise return status code 400.
-Also you can use validation on query in bonus task 1.
+DONE - Create validation service to check request body, query and params to make sure user sends valid request. For example, in registration, user must send valid email, otherwise return status code 400.
+DONE - Also you can use validation on query in bonus task 1.
 
 ---
 
@@ -145,7 +145,7 @@ example of response for request with `language: 'sk'`
 
 ---
 
-## Bonus task 4 - error handling
+## Bonus task 4 - error handling - DONE
 
 Create proper way how to handle all errors in application. Use console.error display error in terminal, user can never see stack trace or real error message. You can write error logs to file.
 

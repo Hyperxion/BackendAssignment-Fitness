@@ -6,11 +6,15 @@ import sequelize from './db/sequelize';
 import { seedDatabase } from './db/seeding/seed';
 import passport from './config/passport.config';
 import session from 'express-session';
+import i18next from './i18n';
+import middleware from 'i18next-http-middleware';
 
 dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 8000;
+
+app.use(middleware.handle(i18next));
 
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
@@ -35,19 +39,19 @@ app.use('/api', routes);
 
 app.use(
   (
-    err: any,
+    error: any,
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
   ) => {
     if (process.env.ENVIRONMENT === 'dev') {
-      console.error(err.stack); // Log stack trace in development
+      console.error(error.stack); // Log stack trace in development
     }
 
-    res.status(err.status || 500).json({
+    res.status(error.status || 500).json({
       error:
         process.env.ENVIRONMENT === 'dev'
-          ? err.message
+          ? error.message
           : 'Internal Server Error',
     });
   },

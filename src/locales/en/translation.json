@@ -1,0 +1,40 @@
+{
+    "exercise": {
+        "created": "Exercise created successfully.",
+        "updated": "Exercise updated successfully.",
+        "deleted": "Exercise deleted successfully.",
+        "not_found": "Exercise not found."
+    },
+    "program": {
+        "created": "Program created successfully.",
+        "updated": "Program updated successfully.",
+        "deleted": "Program deleted successfully.",
+        "not_found": "Program not found."
+    },
+    "user": {
+        "created": "User created successfully.",
+        "updated": "User updated successfully.",
+        "deleted": "User deleted successfully.",
+        "not_found": "User not found."
+    },
+    "trackedExercise": {
+        "started": "Exercise tracking started.",
+        "ended": "Exercise tracking ended.",
+        "removed": "Tracked exercise removed.",
+        "not_found": "Tracked exercise not found."
+    },
+    "error": {
+        "internal": "Internal server error.",
+        "not_found": "Resource not found."
+    },
+    "success": {
+        "operation_completed": "Operation completed successfully.",
+        "login": "User successfully logged in.",
+        "register": "User successfully registered."
+    },
+    "validation": {
+        "required_field": "{{field}} is required.",
+        "password_invalid": "Password must contain at least 6 characters and one special character.",
+        "invalid_id": "The provided ID is invalid."
+    }
+}

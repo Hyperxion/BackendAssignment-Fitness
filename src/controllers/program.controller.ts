@@ -7,7 +7,6 @@ import {
   deleteProgram,
 } from '../services/program.service';
 import { errorResponse, successResponse } from '../utils/response';
-import { getExerciseById } from '../services/exercise.service';
 
 // Get all programs
 export const fetchAllPrograms = async (req: Request, res: Response) => {
@@ -22,9 +21,12 @@ export const fetchAllPrograms = async (req: Request, res: Response) => {
 
     const programs = await getAllPrograms(page, limit, filters, search);
 
-    res.status(200).json(successResponse(programs, 'List of programs'));
+    res
+      .status(200)
+      .json(successResponse(programs, req.t('success.operation_completed')));
   } catch (error: any) {
-    res.status(500).json(errorResponse('Failed to fetch programs'));
+    console.error('Error fetching programs:', error);
+    res.status(500).json(errorResponse(req.t('error.internal')));
   }
 };
 
@@ -34,9 +36,16 @@ export const fetchProgramById = async (req: Request, res: Response) => {
     const { id } = req.params;
     const program = await getProgramById(id);
 
-    res.status(200).json(program);
+    if (!program) {
+      res.status(404).json(errorResponse(req.t('program.not_found')));
+    }
+
+    res
+      .status(200)
+      .json(successResponse(program, req.t('success.operation_completed')));
   } catch (error: any) {
-    res.status(404).json({ error: error.message });
+    console.error('Error fetching program:', error);
+    res.status(500).json(errorResponse(req.t('error.internal')));
   }
 };
 
@@ -48,17 +57,17 @@ export const createNewProgram = async (req: Request, res: Response) => {
     if (!name) {
       return res
         .status(400)
-        .json(errorResponse('Program name is required.', 400));
+        .json(
+          errorResponse(req.t('validation.required_field', { field: 'name' })),
+        );
     }
 
     const program = await createProgram({ name });
-    res
-      .status(201)
-      .json(
-        successResponse({ id: program.id }, 'Program created successfully'),
-      );
+
+    res.status(201).json(successResponse(program, req.t('program.created')));
   } catch (error: any) {
-    res.status(500).json(errorResponse('Failed to create program', 400));
+    console.error('Error creating program:', error);
+    res.status(500).json(errorResponse(req.t('error.internal')));
   }
 };
 
@@ -66,44 +75,22 @@ export const createNewProgram = async (req: Request, res: Response) => {
 export const updateExistingProgram = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const updates = req.body;
-    const program = await updateProgram(id, updates);
-    res
-      .status(201)
-      .json(
-        successResponse({ id: program.id }, 'Program updated successfully'),
-      );
+    const name = req.body;
+
+    if (!name) {
+      return res
+        .status(400)
+        .json(
+          errorResponse(req.t('validation.required_field', { field: 'name' })),
+        );
+    }
+
+    const program = await updateProgram(id, { name });
+
+    res.status(200).json(successResponse(program, req.t('program.updated')));
   } catch (error: any) {
-    res.status(500).json(errorResponse('Failed to update program'));
-  }
-};
-
-/**
- * Add/Changes exercise to program assignment
- */
-export const addExerciseToProgram = async (req: Request, res: Response) => {
-  try {
-    const { programId, exerciseId } = req.params;
-
-    const program = await getProgramById(programId);
-    if (!program) {
-      return res.status(404).json(errorResponse('Program not found.'));
-    }
-
-    const exercise = await getExerciseById(exerciseId);
-    if (!exercise) {
-      return res.status(404).json(errorResponse('Exercise not found.'));
-    }
-
-    exercise.programId = programId; // Associate the exercise with the program
-    await exercise.save();
-
-    res
-      .status(200)
-      .json(successResponse(exercise, 'Exercise added to program.'));
-  } catch (error) {
-    console.error('Error adding exercise to program:', error);
-    res.status(500).json(errorResponse('Failed to add exercise to program.'));
+    console.error('Error updating program:', error);
+    res.status(500).json(errorResponse(req.t('error.internal')));
   }
 };
 
@@ -112,10 +99,14 @@ export const deleteExistingProgram = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const result = await deleteProgram(id);
-    res
-      .status(200)
-      .json(successResponse({ id }, 'Program deleted successfully'));
+
+    if (!result) {
+      res.status(404).json(errorResponse(req.t('program.not_found')));
+    }
+
+    res.status(200).json(successResponse(null, req.t('program.deleted')));
   } catch (error: any) {
-    res.status(500).json(errorResponse('Failed to delete program'));
+    console.error('Error deleting programs:', error);
+    res.status(500).json(errorResponse(req.t('error.internal')));
   }
 };

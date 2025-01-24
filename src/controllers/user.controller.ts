@@ -37,9 +37,13 @@ export const getAllUsers = async (req: Request, res: Response) => {
         : ['id', 'nickName'];
 
     const users = await fetchAllUsers(page, limit, attributes, filters, search);
-    res.status(200).json(successResponse(users, 'List of all users.'));
+
+    res
+      .status(200)
+      .json(successResponse(users, req.t('success.operation_completed')));
   } catch (error) {
-    res.status(500).json(errorResponse(error.message));
+    console.error('Error getting users:', error);
+    res.status(500).json(errorResponse(req.t('error.internal')));
   }
 };
 
@@ -48,13 +52,13 @@ export const getUserDetails = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await fetchUserById(id);
+
     res
       .status(200)
-      .json(successResponse(user, 'User details fetched successfully.'));
+      .json(successResponse(user, req.t('success.operation_completed')));
   } catch (error) {
-    res
-      .status(error.message === 'User not found.' ? 404 : 500)
-      .json(errorResponse(error.message));
+    console.error('Error getting user details:', error);
+    res.status(500).json(errorResponse(req.t('error.internal')));
   }
 };
 
@@ -77,15 +81,15 @@ export const updateUser = async (req: Request, res: Response) => {
 
     const user = await User.findByPk(id);
     if (!user) {
-      return res.status(404).json(errorResponse('User not found.'));
+      return res.status(404).json(errorResponse(req.t('message.not_found')));
     }
 
     await user.update(updates);
 
-    res.status(200).json(successResponse(user, 'User updated successfully.'));
+    res.status(200).json(successResponse(user, req.t('user.updated')));
   } catch (error) {
     console.error('Error updating user:', error);
-    res.status(500).json(errorResponse('Failed to update user.'));
+    res.status(500).json(errorResponse(req.t('error.internal')));
   }
 };
 
@@ -99,13 +103,9 @@ export const getOwnProfile = async (req: Request, res: Response) => {
 
     res
       .status(200)
-      .json(
-        successResponse(profile, 'Your profile data fetched successfully.'),
-      );
+      .json(successResponse(user, req.t('success.operation_completed')));
   } catch (error) {
     console.error('Error fetching profile:', error);
-    res
-      .status(500)
-      .json(errorResponse(error.message || 'Failed to fetch profile data.'));
+    res.status(500).json(errorResponse(req.t('error.internal')));
   }
 };

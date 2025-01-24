@@ -68,10 +68,6 @@ export const updateProgram = async (
 ) => {
   const program = await Program.findByPk(id);
 
-  if (!program) {
-    throw new Error('Program not found');
-  }
-
   await program.update(updates);
   return program;
 };
@@ -79,10 +75,6 @@ export const updateProgram = async (
 // Delete a program
 export const deleteProgram = async (id: string) => {
   const program = await Program.findByPk(id);
-
-  if (!program) {
-    throw new Error('Program not found');
-  }
 
   await program.destroy();
   return { message: 'Program deleted successfully' };

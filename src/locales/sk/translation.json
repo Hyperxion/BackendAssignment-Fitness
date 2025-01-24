@@ -1,0 +1,44 @@
+{
+    "exercise": {
+        "created": "Cvičenie bolo úspešne vytvorené.",
+        "updated": "Cvičenie bolo úspešne aktualizované.",
+        "deleted": "Cvičenie bolo úspešne vymazané.",
+        "not_found": "Cvičenie nebolo nájdené.",
+        "found": "Cvičenie/a bolo/i nájdené."
+    },
+    "program": {
+        "created": "Program bol úspešne vytvorený.",
+        "updated": "Program bol úspešne aktualizovaný.",
+        "deleted": "Program bol úspešne vymazaný.",
+        "not_found": "Program nebol nájdený.",
+        "found": "Program/y bol/i nájdené."
+    },
+    "user": {
+        "created": "Používateľ bol úspešne vytvorený.",
+        "updated": "Používateľ bol úspešne aktualizovaný.",
+        "deleted": "Používateľ bol úspešne vymazaný.",
+        "not_found": "Používateľ nebol nájdený.",
+        "found": "Používateľ/lia bol/i nájdení."
+    },
+    "trackedExercise": {
+        "started": "Sledovanie cvičenia bolo spustené.",
+        "ended": "Sledovanie cvičenia bolo ukončené.",
+        "removed": "Sledované cvičenie bolo vymazané.",
+        "not_found": "Sledované cvičenie nebolo nájdené.",
+        "found": "Sledované cvičenie/a bolo/i nájdené."
+    },
+    "error": {
+        "internal": "Interná chyba servera.",
+        "not_found": "Zdroje neboli nájdené."
+    },
+    "success": {
+        "operation_completed": "Operácia bola úspešne dokončená.",
+        "login": "Pužívateľ bol úspešne prihlásený.",
+        "register": "Pužívateľ bol úspešne zaregistrovaný."
+    },
+    "validation": {
+        "required_field": "Pole {{field}} je povinné.",
+        "password_invalid": "Heslo musí obsahovať aspoň 6 znakov a jeden špeciálny znak.",
+        "invalid_id": "Poskytnuté ID je neplatné."
+    }
+}
