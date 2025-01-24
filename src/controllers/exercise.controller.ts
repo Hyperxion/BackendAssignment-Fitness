@@ -4,7 +4,6 @@ import {
   deleteExercise,
   getAllExercises,
   getExerciseById,
-  getPaginatedExercises,
   removeTrackedExercise,
   updateExercise,
 } from '../services/exercise.service';
@@ -21,7 +20,7 @@ export const fetchAllExercises = async (req: Request, res: Response) => {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
 
-    const exercises = await getPaginatedExercises(page, limit);
+    const exercises = await getAllExercises(page, limit);
 
     res.status(200).json(successResponse(exercises, 'List of exercises'));
   } catch (error: any) {

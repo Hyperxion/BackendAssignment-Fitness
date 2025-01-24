@@ -5,26 +5,14 @@ import TrackedExercise from '../models/trackedExercise.model';
 import { EXERCISE_DIFFICULTY } from '../utils/enums';
 import { paginate } from '../utils/paginationHelper';
 
-export const getPaginatedExercises = async (page: number, limit: number) => {
+// Fetch all exercises
+export const getAllExercises = async (page: number, limit: number) => {
   return await paginate(
     Exercise,
     { attributes: ['id', 'name', 'difficulty', 'programId'] },
     page,
     limit,
   );
-};
-
-// Fetch all exercises
-export const getAllExercises = async () => {
-  return await Exercise.findAll({
-    include: [
-      {
-        model: Program,
-        as: 'program',
-        attributes: ['id', 'name'],
-      },
-    ],
-  });
 };
 
 // Fetch a single exercise by ID
