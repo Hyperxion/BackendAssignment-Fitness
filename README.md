@@ -158,3 +158,47 @@ response status code >= 500
   message: 'Something went wrong';
 }
 ```
+
+# Feedback zadanie
+
+## TASK 1
+
+1. POST /register - neošetrený prípad, ak už taký user v systéme existuje
+   - po ukončení registrácie by som už asi považoval používateľa za prihláseného, nech sa nemusí znova prihlasovať cez POST /login
+2. POST /login
+   - nerozumiem vytváraniu "veľkého" userResponse objektu, keď do response ide len "name" a "surname"
+
+## TASK 2
+
+1. PUT /exercises/:id
+   - najprv sa načíta exercise z databázy a až tak sa validuje request body, to nie je správne
+2. exercise.service
+   - je tam funkcia ktorá načítava exercise na základe ID, ak exercise neexistuje, nemusí vraciať error, aj null je validná hodnota, s ktorou sa možno neskôr dá pracovať (vo všeobecnosti)
+     error by som vracal až vyššie, v controlleri (ak getExerciseById vrátilo null, potom throw 404)
+3. chýba kontrola, či v DB existuje daný program, ak neexistuje, malo by to vrátiť 404
+4. DELETE /exercises/:id
+   - vo funkcii deleteExercise sa opakuje kód, ktorý už raz máme vo funkcii getExerciseById
+5. GET /users
+   - pravdepodobne by som tento endpoint rozdelil na dva samostatné, pre admina a pre bežného používateľa, minimálne z dôvodu rôznych atribútov v response
+6. GET /users/:id
+   - user.service: to isté, čo pri exercise.service vyššie
+7. PUT /users/:id
+   - pri kontrole, či daný používateľ existuje, môžeme použíť existujúcu funkciu z user.service, takto sa len zbytočne duplikuje kód
+
+## TASK 3
+
+1. GET /profile
+   - zbytočné definovanie a použitie funkcie getOwnProfileService(id). user už je v session, koniec koncov aj tento nakoniec ide do response. Navyše na získavanie usera na základe jeho id už jednu funkciu definovanú máme (fetchUserById)
+   - chýba zoznam dokončených cvičení prihláseného používateľa
+
+## BONUS TASK 1
+
+- ok
+
+## BONUS TASK 2
+
+- napriek vytvoreniu validateRequest funkcie, nie je použitá všade a aj tak sa vstupy niektorých requestov validujú v hlavnej funkcii requestu
+
+## BONUS TASK 3
+
+- ok
